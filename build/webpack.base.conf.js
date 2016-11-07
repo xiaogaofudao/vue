@@ -3,12 +3,11 @@ var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
 
-var glob = require('glob');
-var entries = getEntry('./src/module/**/*.js'); // 获得入口js文件
-
 
 module.exports = {
-    entry: entries,
+    entry: {
+       index: path.resolve(__dirname, '../src/main.js')
+     },
     output: {
         path: config.build.assetsRoot,
         publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
@@ -49,7 +48,12 @@ module.exports = {
             test: /\.js$/,
             loader: 'babel',
             include: projectRoot,
-            exclude: /node_modules/
+            exclude: /node_modules/,
+            query: {
+             cacheDirectory:  path.resolve(__dirname, '../temp'),
+             plugins: ['transform-runtime'],
+             presets: ['es2015', 'stage-0']
+           }
         }, {
             test: /\.json$/,
             loader: 'json'
@@ -73,7 +77,7 @@ module.exports = {
         }, {
             test: /\.scss$/,
              loader: "style!css!sass"
-        }]
+        }],
     },
     // eslint: {
     //   formatter: require('eslint-friendly-formatter')
@@ -86,18 +90,4 @@ module.exports = {
             })
         ]
     }
-}
-
-function getEntry(globPath) {
-    var entries = {},
-        basename, tmp, pathname;
-
-    glob.sync(globPath).forEach(function(entry) {
-        basename = path.basename(entry, path.extname(entry));
-        tmp = entry.split('/').splice(-3);
-        pathname = tmp.splice(0, 1) + '/' + basename; // 正确输出js和html的路径
-        entries[pathname] = entry;
-    });
-    console.log(entries);
-    return entries;
-}
+};
