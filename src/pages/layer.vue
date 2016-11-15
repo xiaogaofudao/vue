@@ -1,7 +1,14 @@
-<style lang="css">
-
-
-
+<style lang="less">
+.notify{
+  .selfa{
+    max-width: 500px;
+    background-color: #999;
+    color: green;
+    &>em{
+      border-color: #999;
+    }
+  }
+}
 </style>
 
 <template lang="html">
@@ -18,6 +25,16 @@
     <pzbutton @click.native="loadingHandle">默认样式</pzbutton>
     <pzbutton @click.native="loading1Handle">第一种样式</pzbutton>
     <pzbutton @click.native="loading2Handle">第二种样式</pzbutton>
+    <h2>tips</h2>
+    <pzbutton id="tips" @click.native="tipsHandle">上</pzbutton>
+    <pzbutton  id="tips1" @click.native="tips1Handle">右</pzbutton>
+    <pzbutton  id="tips2" @click.native="tips2Handle">下</pzbutton>
+    <pzbutton  id="tips3" @click.native="tips3Handle">左-自定义样式</pzbutton>
+    <h2>page</h2>
+    <pzbutton id="tips" @click.native="pageHandle">自定义</pzbutton>
+    <pzbutton  id="tips1" @click.native="tips1Handle">右</pzbutton>
+    <pzbutton  id="tips2" @click.native="tips2Handle">下</pzbutton>
+    <pzbutton  id="tips3" @click.native="tips3Handle">左-自定义样式</pzbutton>
 </div>
 
 </template>
@@ -50,7 +67,7 @@ export default {
                 });
             },
             msgHandle: function() {
-                let id = this.$layer.msg("弱弱的提示");
+                let id = this.$layer.msg("弱弱的提示" );
             },
             msg1Handle: function() {
                 let id = this.$layer.msg("2s后刷新页面", function() {
@@ -71,6 +88,31 @@ export default {
                 let id = this.$layer.loading(2, {
                     time: 2
                 });
+            },
+            tipsHandle: function() {
+                let id = this.$layer.tips("在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，", '#tips');
+            },
+            tips1Handle: function() {
+              let id = this.$layer.tips("在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，", '#tips1',{
+                tips:1
+              });
+            },
+            tips2Handle: function() {
+              let id = this.$layer.tips("在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，", '#tips2',{
+                tips:2
+              });
+            },
+            tips3Handle: function() {
+              let id = this.$layer.tips("在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，在很久很久以前，", '#tips3', {
+                tips:[3, {"selfa":true}]
+              });
+            },
+            pageHandle: function() {
+              let id = this.$layer.open({
+                type:2,
+                content: 'http://www.baidu.com',
+                area:['800px','400px']
+              });
             },
         }
 }
